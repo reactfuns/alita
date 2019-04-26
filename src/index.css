@@ -1,3 +1,10 @@
+* {
+  -webkit-overflow-scrolling:touch
+}
+html,
+body {
+  width: 100vw;
+}
 body {
   margin: 0;
   padding: 0;
