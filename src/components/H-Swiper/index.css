@@ -1,0 +1,21 @@
+.hdz-swiper {
+    width: 100vw;
+    height: 56.25vw;
+    overflow: hidden
+}
+
+.hdz-swiper .hdz-swiper-body {
+    width: 100%;
+    height: 100%
+}
+
+.hdz-swiper .hdz-swiper-body .hdz-swiper-link {
+    display: block;
+    width: 100vw;
+    height: 56.25vw
+}
+
+.hdz-swiper .hdz-swiper-body .hdz-swiper-link .hdz-swiper-image {
+    width: 100%;
+    height: 100%
+}

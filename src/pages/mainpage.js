@@ -108,7 +108,7 @@ export default (props) => {
    */
 
   return (
-    <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+    <div style={{ position: 'fixed', height: '100vh', width: '100vw', top: 0 }}>
       <TabBar unselectedTintColor="#949494" tintColor="#33A3F4" barTintColor="white" hidden={false}  >
         { Object.keys(gTabBar).map(key => (
           <TabBar.Item title={key} key={key}
