@@ -16,7 +16,7 @@ export default (props) => (
                 {...props}
             />
         );
-        else return null;
+        else return (<p>Invisible Image</p>);
     }}
     </VisibilitySensor>
 
