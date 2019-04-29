@@ -1,11 +1,11 @@
 import React from 'react';
+// import { WhiteSpace } from 'antd-mobile';
 
-export default ({ height, color }) => (
+export default ({size, color}) => (
     <div 
-        className="hdz-space-block"
         style={{
             width: "100%",
-            height: height || "10px",
+            height: `${size}px` || "10px",
             backgroundColor: color || "transparent"
         }}
     ></div>

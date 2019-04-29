@@ -1,23 +1,21 @@
 import React, { Fragment } from 'react';
-
 import VisibilitySensor from 'react-visibility-sensor';
-import Img from 'react-image';
+
+import HotImage from '../HotImage';
 
 export default (props) => (
-
     <VisibilitySensor>
     {({isVisible}) => {
         if (isVisible) return (
-            <Img 
-                style={{ 
+            <HotImage 
+                style={{
                     width: "100vw", 
                     height: `${100/(props.ratio || 4)}vw` 
                 }}
-                {...props}
+                {...props} 
             />
         );
         else return (<p>Invisible Image</p>);
     }}
     </VisibilitySensor>
-
 )
