@@ -1,10 +1,11 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useRef } from 'react';
 
-import HSearch from '../components/H-Search';
+import SearchBar from '../components/SearchBar';
+import LazyImage from '../components/LazyImage';
+
 import HSwiper from '../components/H-Swiper';
 import HGrid from '../components/H-Grid';
 import HAnnouncement from '../components/H-Announcement';
-import LazyImage from '../components/LazyImage';
 import HSpaceBlock from '../components/H-SpaceBlock';
 import HListView from '../components/H-ListView';
 
@@ -12,11 +13,11 @@ import { swiper_data, grid_data, list_view_data } from '../data';
 
 export default (props) => {
 
+  const searchbar = useRef(null);
 
   return (
     <Fragment>
-      {/* <p><a href='javacript:void(0);' onClick={() => props.history.push(config.LOCAL_URL.LOGIN_OAUTH)}>Login OAuth</a></p> */}
-      <HSearch />
+      <SearchBar ref={searchbar} onSubmit={ () => {console.log(`search: ${searchbar.current.props.value}`)} } />
       <HAnnouncement data="Notice: The arrival time of incomes and transfers of Yu 'E Bao will be delayed during National Day." />
       <HSwiper data={swiper_data} />
       <HGrid data={grid_data} />
