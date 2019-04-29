@@ -8,7 +8,7 @@ import config from '../lib/config';
 const LOCAL_URL_SKUS = config.LOCAL_URL.SKUS;
 const Item = List.Item;
 const Brief = Item.Brief;
-let i = 0;
+
 export default (props) => {
 
   /**
@@ -37,8 +37,6 @@ export default (props) => {
   useEffect(() => {
     // console.log('ProductsPage::useEffect: ', {shopContext});
     shopContext.fetch('spu', { category: 'PRODUCT' });
-    console.log('【？？？】', ++i);
-    
   }, []);
 
   /**

@@ -21,7 +21,8 @@ module.exports = {
         "MINE"          : "/app/weshop/mainpage/private/mine"
     },
 
-    "API_ROOT": "http://atlantis.yg-net.com/api",
+    // "API_ROOT": "http://atlantis.yg-net.com/api",
+    "API_ROOT": "http://localhost:3000/api",
     "API_URL": {
         "UPLOAD": {
             "BACKEND_STORAGE": ""
