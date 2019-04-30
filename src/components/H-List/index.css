@@ -1,0 +1,164 @@
+#hdz-list-view {
+  width: 100vw;
+  height: auto;
+}
+#hdz-list-view .hdz-list-item {
+  width: 100vw;
+  height: 33vw;
+  padding: 2vw;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-bottom: 1px solid #E1E1E1;
+  background: #FFF;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+#hdz-list-view .hdz-list-item:last-child {
+  border-bottom: none;
+}
+#hdz-list-view .hdz-list-item .hdz-list-image {
+  width: 38.66666667vw;
+  height: 29vw;
+  overflow: hidden;
+}
+#hdz-list-view .hdz-list-item .hdz-list-image.hdz-list-image-raidus {
+  border-radius: 6px;
+}
+#hdz-list-view .hdz-list-item .hdz-list-image img {
+  width: 100%;
+  height: 100%;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content {
+  width: 60vw;
+  height: 100%;
+  margin: 0 2vw;
+  overflow: hidden;
+  font-size: 3vw;
+  line-height: 1.5;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-title {
+  width: 100%;
+  height: 40%;
+  font-size: 3.5vw;
+  font-weight: bold;
+  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-tags {
+  width: 100%;
+  height: 20%;
+  overflow: hidden;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-tags span {
+  border: 1px solid #FF5E24;
+  color: #FF5E24;
+  font-size: 2.6vw;
+  line-height: 1.5;
+  border-radius: 1vw;
+  padding: .4vw 1vw 0;
+  margin: .5vw .5vw .5vw 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-highlight {
+  width: 100%;
+  height: 20%;
+  overflow: hidden;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-highlight span:first-child {
+  font-size: 4vw;
+  color: red;
+  margin-right: 1vw;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-highlight span:last-child {
+  position: relative;
+  font-size: 2.8vw;
+  color: #999;
+  text-decoration: line-through;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-counter {
+  width: 100%;
+  height: 20%;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-counter .hdz-counter {
+  width: 20vw;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-counter .hdz-counter > div {
+  width: 5.5vw;
+  height: 5.5vw;
+  text-align: center;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-counter .hdz-counter .hdz-counter-sub {
+  font-size: 5vw;
+  color: #999;
+  border: 1px solid #CCC;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-counter .hdz-counter .hdz-counter-show input {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border: none;
+  text-align: center;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-counter .hdz-counter .hdz-counter-plus {
+  font-size: 3vw;
+  color: #999;
+  border: 1px solid #CCC;
+}
+#hdz-list-view .hdz-list-item .hdz-list-content .hdz-list-extra {
+  width: 100%;
+  height: 20%;
+  color: #666;
+  line-height: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#hdz-list-view .hdz-list-item .hdz-list-action {
+  width: 15vw;
+  height: 100%;
+  transition: all 0.35s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+#hdz-list-view .hdz-list-item .hdz-list-action .hdz-list-extra-block {
+  width: 100%;
+  height: 100%;
+  color: #FFF;
+  background: #FDA400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
