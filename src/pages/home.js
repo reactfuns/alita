@@ -4,14 +4,15 @@ import ShopContext from '../context/shop';
 
 import SearchBar from '../components/SearchBar';
 import NoticeBar from '../components/NoticeBar';
-import LazyImage from '../components/LazyImage';
-import HotImage from '../components/HotImage';
+import HotImage from '../components/Image/HotImage';
+import BasicImage from '../components/Image/BasicImage';
 import PlaceHolder from '../components/PlaceHolder';
 import Carousel from '../components/Carousel';
 import Grid from '../components/Grid';
 
 import HListView from '../components/H-ListView';
 
+const DEFAULT_IMAGE = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556274961995&di=8163a3b6045253d7abf8302d23e8d018&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fblog%2F201403%2F20%2F20140320135645_YswQ8.jpeg';
 const FLAG_CAROUSEL = '商城首页.轮播.';
 const FLAG_GRID     = '商城首页.九宫格.';
 const FLAG_AD       = '商城首页.热销.';
@@ -83,7 +84,7 @@ export default (props) => {
                         }))
                         || [];
 
-  console.log({ carousels, grids, ads });
+  // console.log({ carousels, grids, ads });
   const searchbar = useRef(null);
   return (
     <Fragment>
@@ -96,7 +97,7 @@ export default (props) => {
       <div >
         <Carousel >
           { carousels.sort((l, r) => (l.order - r.order)).map((item) => (
-            <HotImage style={{width: "100%", height: "100%"}} key={item.key} href={item.href} src={item.src} />
+            <BasicImage style={{width: "100%", height: "100%"}} key={item.key} href={item.href} src={item.src} />
           ))} 
         </Carousel>
       </div>
@@ -105,7 +106,7 @@ export default (props) => {
       </div>
       <PlaceHolder size={20} color={'#ff0000'} />
       <div>
-        <LazyImage href={'http://www.baidu.com'} ratio={3.7} src={`https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556274961995&di=8163a3b6045253d7abf8302d23e8d018&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fblog%2F201403%2F20%2F20140320135645_YswQ8.jpeg`} />
+        <HotImage href={'http://www.baidu.com'} ratio={3.7} src={DEFAULT_IMAGE} style={{width: "100%", height: "100%"}} />
       </div>
       <div>
         <HListView 

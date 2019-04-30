@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
 
-import HotImage from '../HotImage';
+import HotImage from './HotImage';
 
 export default (props) => (
     <VisibilitySensor>

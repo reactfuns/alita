@@ -46,7 +46,7 @@ class ListView extends Component {
     }
   }
   toCreateListItem(data) {
-    let { title, labels, currPrice, origPrice, thumbnail, extra } = data;
+    let { title, labels, currPrice, origPrice, thumbnail, extra, key } = data;
     title     = title || "";
     labels    = labels || [];
     currPrice = currPrice || 0;
@@ -54,7 +54,7 @@ class ListView extends Component {
     thumbnail = thumbnail || "";
     extra     = extra || "";
     data = { title, labels, currPrice, origPrice, thumbnail, extra };
-    return <ListItem {...this.props} data={data}/>
+    return <ListItem {...this.props} key={key} data={data}/>
   }
   render() {
     let { direction, datas, selectable, editable, toEdit, onSelect } = this.props;
