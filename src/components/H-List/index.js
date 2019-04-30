@@ -37,7 +37,7 @@ function HList(props) {
     let { className, datas, children, renderItem } = props;
     datas = toHandleParamType(datas, [{ type: "Array", action: (data) => data }], () => []);
     return (
-        <div id="hdz-list-view" className={toCheckClassName(className)}>
+        <div id="hdz-list-view" className={toCheckClassName(className)} {...props}>
             {!!children ? children : datas.map(renderItem)}
         </div>
     );
