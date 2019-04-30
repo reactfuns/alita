@@ -3,5 +3,5 @@ import React, { Fragment } from 'react';
 import Img from 'react-image';
 
 export default (props) => (
-    <a href={props.href} ><Img {...props}/> </a>
+    <a style={{...props.style}} href={props.href} ><Img style={{...props.style}} {...props}/> </a>
 )
