@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { SearchBar } from 'antd-mobile';
 
 export default React.forwardRef((props, ref) => {

@@ -57,7 +57,7 @@ class ListView extends Component {
     return <ListItem {...this.props} key={key} data={data}/>
   }
   render() {
-    let { direction, datas, selectable, editable, toEdit, onSelect } = this.props;
+    let { direction, datas, toEdit, onSelect } = this.props;
     direction = direction || "horizontal";
     let selection = !!onSelect ? "selectable" : "not-selectable";
     let edition = !!onSelect ? (!!toEdit ? "editable" : "not-editable") : "not-editable";
