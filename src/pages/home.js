@@ -1,4 +1,6 @@
-import React, {Fragment, useRef } from 'react';
+import React, {Fragment, useContext, useEffect, useRef } from 'react';
+
+import ShopContext from '../context/shop';
 
 import SearchBar from '../components/SearchBar';
 import NoticeBar from '../components/NoticeBar';
@@ -10,29 +12,96 @@ import Grid from '../components/Grid';
 
 import HListView from '../components/H-ListView';
 
-import { swiper_data, grid_data, list_view_data } from '../data';
+const FLAG_CAROUSEL = '商城首页.轮播.';
+const FLAG_GRID     = '商城首页.九宫格.';
+const FLAG_AD       = '商城首页.热销.';
+
+const thisStatus = {
+  isFetched: false
+};
 
 export default (props) => {
 
-  const searchbar = useRef(null);
+  /**
+  State & Context & Props
+  */
 
+  const shopContext = useContext(ShopContext);
+  // const { match: {params: {type}}} = props;
+  const userinterface = shopContext.userinterface || [];
+
+  console.log({thisStatus, userinterface});
+  if (!thisStatus.isFetched || !userinterface || (userinterface.length === 0)) {
+    shopContext.fetch('userinterface');
+    thisStatus.isFetched = true;
+  }
+
+  /**
+    Helper functions
+   */
+
+  /**
+    Lifecycle
+   */
+
+  useEffect(() => {
+    console.log('HomePage::useEffect: ', {shopContext});
+  }, []);
+
+  /**
+    render
+   */
+
+  const carousels = userinterface
+                      .filter((item) => ( (!!item.tree_path) && (item.tree_path.indexOf(FLAG_CAROUSEL) > -1) ))
+                      .map((item) => ({
+                        key: item.tree_path,
+                        title: item.title,
+                        order: item.ex_info.DynamicKV.order,
+                        src: item.ex_info.DynamicKV.src,
+                        href: item.ex_info.DynamicKV.href,
+                      }))
+                      || [];
+  const grids = userinterface
+                    .filter((item) => ( (!!item.tree_path) && (item.tree_path.indexOf(FLAG_GRID) > -1) )) 
+                    .map((item) => ({
+                      icon: item.ex_info.DynamicKV.src,
+                      href: item.ex_info.DynamicKV.href,
+                      text: item.title
+                    }))
+                    || [];
+  const ads = userinterface
+                        .filter((item) => ( (!!item.tree_path) && (item.tree_path.indexOf(FLAG_AD) > -1) ))
+                        .map((item) => ({
+                          key: item.tree_path,
+                          title: item.title,
+                          labels: item.ex_info.DynamicKV.tags.split(','),
+                          currPrice: item.ex_info.DynamicKV.price,
+                          origPrice: item.ex_info.DynamicKV.marketPrice,
+                          thumbnail: item.ex_info.DynamicKV.src,
+                          extra: item.subtitle
+                        }))
+                        || [];
+
+  console.log({ carousels, grids, ads });
+  const searchbar = useRef(null);
   return (
     <Fragment>
       <div>
-        <SearchBar ref={searchbar} onSubmit={ () => {console.log(`search: ${searchbar.current.props.value}`)} } />
+        <SearchBar ref={searchbar} onSubmit={ () => {console.log('search: ', searchbar.current.state.value)} } />
       </div>
       <div >
         <NoticeBar>The arrival time of incomes and transfers of Yu 'E Bao will be delayed during National Day.</NoticeBar>
       </div>
       <div >
         <Carousel >
-          { swiper_data.sort((l, r) => (l.order - r.order)).map((item, id) => (
-            <HotImage style={{width: "100%", height: "100%"}} key={id} href={item.link} src={item.image} />
+          { carousels.sort((l, r) => (l.order - r.order)).map((item) => (
+            <HotImage style={{width: "100%", height: "100%"}} key={item.key} href={item.href} src={item.src} />
           ))} 
         </Carousel>
       </div>
       <div>
-        <Grid data={grid_data} onClick={(item) => { window.location.href = item.link }} />
+        <Grid data={grids} onClick={(item) => { window.location.href = item.href }} />
       </div>
       <PlaceHolder size={20} color={'#ff0000'} />
       <div>
@@ -40,7 +109,7 @@ export default (props) => {
       </div>
       <div>
         <HListView 
-          datas={list_view_data}
+          datas={ads }
           onClick={() => console.log("onClick")}
         />
       </div>
