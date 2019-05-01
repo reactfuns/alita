@@ -1,11 +1,8 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { ListView, List, Tabs } from 'antd-mobile';
+import { ListView, List } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 
 import ShopContext from '../context/shop';
-
-import HList from '../components/H-List';
-import listData from '../temp';
 
 const gProvinceIndex = {
 
@@ -61,58 +58,6 @@ function genListViewSourceData(ds, dataSource) {
   return ds.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs);
 }
 
-const temp_content = (
-  <HList
-    className="List"
-    // style={{
-    //   width: "77%"
-    // }}
-    datas={listData}
-    renderItem={(data, i) => {
-      return (
-        <HList.Item key={i}>
-          <HList.Item.Image
-            image={data.thumbnail}
-            radius
-          />
-          <HList.Item.Content>
-            <HList.Item.Content.Title>{data.title}</HList.Item.Content.Title>
-            <HList.Item.Content.Tags
-              tags={data.labels}
-            />
-            <HList.Item.Content.Highlight
-              highlight={data.currPrice}
-              lowlight={data.origPrice}
-              color="red"
-            />
-            <HList.Item.Content.Extra>{data.extra}</HList.Item.Content.Extra>
-          </HList.Item.Content>
-        </HList.Item>
-      )
-    }}
-  />
-)
-const tabs = [
-  { title: '美食餐饮1', content: temp_content },
-  { title: '美食餐饮2', content: temp_content },
-  { title: '美食餐饮3', content: temp_content },
-  { title: '美食餐饮4', content: temp_content },
-  { title: '美食餐饮5', content: temp_content },
-  { title: '美食餐饮6', content: temp_content },
-  { title: '美食餐饮7', content: temp_content },
-  { title: '美食餐饮8', content: temp_content },
-  { title: '美食餐饮9', content: temp_content },
-  { title: '美食餐饮10', content: temp_content },
-  { title: '美食餐饮11', content: temp_content },
-  { title: '美食餐饮12', content: temp_content },
-  { title: '美食餐饮13', content: temp_content },
-  { title: '美食餐饮14', content: temp_content },
-  { title: '美食餐饮15', content: temp_content },
-  { title: '美食餐饮16', content: temp_content },
-  { title: '美食餐饮17', content: temp_content },
-  { title: '美食餐饮18', content: temp_content },
-];
-
 const gListViewDS = new ListView.DataSource({
   getRowData              : (dataBlob, sectionID, rowID) => dataBlob[rowID],
   getSectionHeaderData    : (dataBlob, sectionID) => dataBlob[sectionID],
@@ -153,17 +98,34 @@ export default (props) => {
 
 
   return (
-    <Tabs tabs={tabs}
-      initalPage={1}
-      tabBarPosition="left"
-      tabDirection="vertical"
-      renderTabBar={props => <Tabs.DefaultTabBar {...props} page={10} />}
-    >
-      {tabs.map((tab, i) => (
-        <div style={{ width: "calc(100% - 100px)" }}>
-          {tab.content}
-        </div>
-      ))}
-    </Tabs>
+    <div style={{ paddingTop: '44px', position: 'relative' }}>
+      <ListView.IndexedList
+        ref={(ref) => (thisRef['listView'] = ref)}
+        dataSource={dataSource}
+        useBodyScroll
+        renderSectionWrapper={sectionID => ( <StickyContainer key={`s_${sectionID}_c`} style={{ zIndex: 4 }} /> )}
+        renderSectionHeader={sectionData => (
+          <Sticky>
+            {({ style }) => (
+              <div
+                style={{
+                  ...style,
+                  zIndex: 3,
+                  backgroundColor: sectionData.charCodeAt(0) % 2 ? '#5890ff' : '#F8591A',
+                  color: 'white',
+                }}
+              >{sectionData}</div>
+            )}
+          </Sticky>
+        )}
+        renderHeader={() => <span>custom header</span>}
+        renderFooter={() => <span>custom footer</span>}
+        renderRow={rowData => (<List.Item>{rowData}</List.Item>)}
+        quickSearchBarStyle={{ top: 85 }}
+        delayTime={10}
+        delayActivityIndicator={<div style={{ padding: 25, textAlign: 'center' }}>rendering...</div>}
+        onQuickSearch={toGotoPos} 
+      />
+    </div>
   )
 }
