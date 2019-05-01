@@ -11,12 +11,19 @@ import Carousel from '../components/Carousel';
 import Grid from '../components/Grid';
 
 import HList from '../components/H-List';
-import listData from '../temp';
 
 const DEFAULT_IMAGE = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556274961995&di=8163a3b6045253d7abf8302d23e8d018&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fblog%2F201403%2F20%2F20140320135645_YswQ8.jpeg';
 const FLAG_CAROUSEL = '商城首页.轮播.';
 const FLAG_GRID     = '商城首页.九宫格.';
-const FLAG_AD       = '商城首页.热销.';
+const gADChannel = {
+  FLAG_HOT      : { pathFlag: '商城首页.热销.' },
+  FLAG_SEASON   : { pathFlag: '商城首页.当季.', counter: 0 },
+  FLAG_LIQUIDATE: { pathFlag: '商城首页.尾单.', actions: [
+    { text: "编辑", onClick: () => { console.log('BJ'); } },
+    { text: "确认", onClick: () => { console.log('QR'); } },
+    { text: "取消", onClick: () => { console.log('QX'); } },
+  ] },
+}
 
 const thisStatus = {
   isFetched: false
@@ -32,7 +39,10 @@ export default (props) => {
   // const { match: {params: {type}}} = props;
   const userinterface = shopContext.userinterface || [];
 
+  
   console.log({thisStatus, userinterface});
+
+
   if (!thisStatus.isFetched || !userinterface || (userinterface.length === 0)) {
     shopContext.fetch('userinterface');
     thisStatus.isFetched = true;
@@ -72,20 +82,25 @@ export default (props) => {
                       text: item.title
                     }))
                     || [];
-  const ads = userinterface
-                        .filter((item) => ( (!!item.tree_path) && (item.tree_path.indexOf(FLAG_AD) > -1) ))
-                        .map((item) => ({
-                          key: item.tree_path,
-                          title: item.title,
-                          labels: item.ex_info.DynamicKV.tags.split(','),
-                          currPrice: item.ex_info.DynamicKV.price,
-                          origPrice: item.ex_info.DynamicKV.marketPrice,
-                          thumbnail: item.ex_info.DynamicKV.src,
-                          extra: item.subtitle
-                        }))
-                        || [];
+  const ads = {};
+  Object.keys(gADChannel).forEach(channel => {
+    ads[channel] = userinterface
+    .filter((item) => ( (!!item.tree_path) && (item.tree_path.indexOf(gADChannel[channel].pathFlag) > -1) ))
+    .map((item) => ({
+      key: item.tree_path,
+      title: item.title,
+      labels: item.ex_info.DynamicKV.tags.split(',').map(text => ({text})),
+      currPrice: item.ex_info.DynamicKV.price,
+      origPrice: item.ex_info.DynamicKV.marketPrice,
+      thumbnail: item.ex_info.DynamicKV.src,
+      counter: item.ex_info.counter || gADChannel[channel].counter,
+      actions: gADChannel[channel].actions,
+      extra: item.subtitle
+    }))
+    || [];
+  });
 
-  // console.log({ carousels, grids, ads });
+  console.log({ carousels, grids, ads });
   const searchbar = useRef(null);
   return (
     <Fragment>
@@ -105,45 +120,30 @@ export default (props) => {
       <div>
         <Grid data={grids} onClick={(item) => { window.location.href = item.href }} />
       </div>
-      <PlaceHolder size={20} color={'#ff0000'} />
-      <div>
-        <HotImage href={'http://www.baidu.com'} ratio={3.7} src={DEFAULT_IMAGE} style={{width: "100%", height: "100%"}} />
-      </div>
-      <div>
-        <HList
-          className="List"
-          datas={listData}
-          renderItem={(data, i) => {
-            return (
-              <HList.Item key={i}>
-                <HList.Item.Image
-                  image={data.thumbnail}
-                  radius
-                />
-                <HList.Item.Content>
-                  <HList.Item.Content.Title>{data.title}</HList.Item.Content.Title>
-                  <HList.Item.Content.Tags
-                    tags={data.labels}
-                  />
-                  <HList.Item.Content.Highlight
-                    highlight={data.currPrice}
-                    lowlight={data.origPrice}
-                    color="red"
-                  />
-                  {/* <HList.Item.Content.Counter
-                  onChange={(value) => console.log(value)}
-                /> */}
-                  <HList.Item.Content.Extra>{data.extra}</HList.Item.Content.Extra>
-                </HList.Item.Content>
-                {<HList.Item.Action
-                  datas={data.action}
-                />}
-              </HList.Item>
-            )
-          }}
-        />
-      </div>
 
+      { Object.keys(ads).filter((channel) => ((!!ads[channel]) && (ads[channel].length > 0))).map((channel) => (
+        <Fragment key={channel}>
+          <PlaceHolder size={20} color={'#ff0000'} />
+          <div>
+            <HotImage href={'http://www.baidu.com'} ratio={3.7} src={DEFAULT_IMAGE} style={{width: "100%", height: "100%"}} />
+          </div>
+          <div>
+            <HList className="List" data={ads[channel]} renderItem={(item) => (
+              <HList.Item key={item.key}>
+                <HList.Item.Image image={item.thumbnail} radius />
+                <HList.Item.Content>
+                  <HList.Item.Content.Title>{item.title}</HList.Item.Content.Title>
+                  <HList.Item.Content.Tags tags={item.labels} />
+                  <HList.Item.Content.Highlight highlight={item.currPrice} lowlight={item.origPrice} color="red" />
+                  {(!item.counter && item.counter !== 0) ? null : <HList.Item.Content.Counter onChange={(value) => console.log(value)} />}
+                  <HList.Item.Content.Extra>{item.extra}</HList.Item.Content.Extra>
+                </HList.Item.Content>
+                {!item.actions ? null : <HList.Item.Action actions={item.actions} />}
+              </HList.Item>
+            )} />
+          </div>
+        </Fragment>
+      ))}
 
     </Fragment>
   )

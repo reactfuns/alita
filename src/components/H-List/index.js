@@ -32,13 +32,12 @@ const toHandleParamType = (param, type_array, other) => {
     }
 }
 
-
 function HList(props) {
-    let { className, datas, children, renderItem } = props;
-    datas = toHandleParamType(datas, [{ type: "Array", action: (data) => data }], () => []);
+    let { className, data, children, renderItem } = props;
+    data = toHandleParamType(data, [{ type: "Array", action: (data) => data }], () => []);
     return (
         <div id="hdz-list-view" className={toCheckClassName(className)} {...props}>
-            {!!children ? children : datas.map(renderItem)}
+            {!!children ? children : data.map(renderItem)}
         </div>
     );
 
@@ -69,11 +68,10 @@ function Content({ className, children }) {
     )
 }
 
-function Action({ className, datas }) {
-    datas = toHandleParamType(datas, [{ type: "Array", action: datas => datas }], () => []);
+function Action({ className, actions }) {
     return (
         <div className={`hdz-list-action ${toCheckClassName(className)}`}>
-            {datas.map((data, i) => <span className="hdz-list-extra-block" onClick={data.action} key={i}>{data.text}</span>)}
+            {actions.map((action, i) => <span className="hdz-list-extra-block" onClick={action.onClick} key={action.text}>{action.text}</span>)}
         </div>
     )
 }
@@ -105,35 +103,16 @@ function Highlight({ className, highlight, lowlight, color }) {
     )
 }
 function Counter({ className, onChange }) {
-    const [thisState, setThisState] = useState({
-        value: 1
-    })
-    const toHandleChange = (e) => {
-        let value = e.target.value.replace(/[^\d]/g, '');
-        if (thisState.value === value) return;
-        onChange(value);
-        setThisState({ value });
-    }
-    const toHandleClick = (type) => () => {
-        if (type === 'sub') {
-            if (!thisState.value) return;
-            let value = thisState.value * 1 - 1;
-            setThisState({ value });
-            onChange(value);
-        } else if (type === 'plus') {
-            let value = thisState.value * 1 + 1;
-            setThisState({ value });
-            onChange(value);
-        }
-    }
+    const [thisNumber, setThisNumber] = useState(1);
+    const toHandleChange = (e) => setThisNumber(e.target.value.replace(/[^\d]/g, ''));
     return (
         <div className={`hdz-list-counter ${toCheckClassName(className)}`}>
             <div className="hdz-counter">
-                <div className="hdz-counter-sub" onClick={toHandleClick('sub')}>-</div>
+                <div className="hdz-counter-sub" onClick={() => setThisNumber(thisNumber-1)}>-</div>
                 <div className="hdz-counter-show">
-                    <input type="text" placeholder="" onChange={toHandleChange} value={thisState.value} />
+                    <input type="text" placeholder="" onChange={toHandleChange} value={thisNumber} />
                 </div>
-                <div className="hdz-counter-plus" onClick={toHandleClick('plus')}>+</div>
+                <div className="hdz-counter-plus" onClick={() => setThisNumber(thisNumber+1)}>+</div>
             </div>
         </div>
     )
@@ -146,7 +125,6 @@ function Extra({ className, children }) {
         </div>
     )
 }
-
 
 HList['Item'] = Item;
 HList['Item']['Image'] = Image;
