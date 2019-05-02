@@ -36,21 +36,21 @@ export default (props) => {
 
   useEffect(() => {
     console.log('MaindataPage::useEffect: ', shopContext);
-    if (!thisState.isUpdated) shopContext.fetch('maindata');
+    if (!thisState.isUpdated) shopContext.fetch('publicmd');
   }, [thisState.isUpdated]);
 
   /**
     Render
    */
 
-  const { maindata } = shopContext;
+  const { publicmd } = shopContext;
   return (
     <Fragment>
       <Button onClick={toTestUpdated}>update</Button>
       <Button onClick={toTestPaying}>paying</Button>
       <Button onClick={toTestReset}>reset</Button>
       <List renderHeader={() => '个人信息'} > 
-      { maindata.map((md) => (
+      { publicmd.map((md) => (
         <List.Item className="mine-li" arrow="horizontal" key={md.tree_path} >
             <p key={md.id}>{md.tree_path}</p>
         </List.Item>

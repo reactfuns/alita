@@ -85,7 +85,6 @@ export default (props) => {
         <Route component={Menu} path={url} exact />
         <Route component={MaindataPage} path={`${url}/maindata`} />
         <Route component={ContentsPage} path={`${url}/contents`} />
-        <Route component={MaindataPage} path={`${url}/maindata`} />
         <Route component={ContentsPage} path={`${url}/contents`} />
         <Route component={ProductsSPUPage} path={`${url}/products`} />
         <Route component={ProductsSKUPage} path={`${url}/skus`} />

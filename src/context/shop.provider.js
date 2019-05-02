@@ -8,15 +8,16 @@ import ShopContext from './shop';
 import { shopReducer, ACTION_SET } from './shop.reducer';
 
 const gTargetUrl = {
-    userinterface: '/userinterface',
-    
-    maindata: '/maindata',
 
     login: '/login',
     users: '/users',
     usercredentials: '/usercredentials',
 
+    publicmd: '/publicmd',
+
+    userinterface: '/userinterface',
     contents: '/contents',
+
     spu: '/products/spu',
     sku: '/products/sku',
     inventories: '/stocks/inventories',
@@ -37,7 +38,7 @@ export default function ShopProvider(props) {
 
         criteria: {},
 
-        maindata: [],
+        publicmd: [],
 
         contents: [],
         userinterface: [],

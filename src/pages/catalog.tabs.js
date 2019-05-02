@@ -7,6 +7,8 @@ import ShopContext from '../context/shop';
 
 import List from '../components/List';
 
+const MD_CATEGORY_INDEX_MODEL = 'MD_INDEX_MODEL';
+
 const tabs = [
   { title: '1', content: <div>hello world</div> },
   { title: '2', content: <div>hello world</div> },
@@ -28,27 +30,42 @@ const tabs = [
   { title: '18', content: <div>hello world</div> },
 ];
 
+const thisStatus = {
+  isFetched: false
+};
+
 export default (props) => {
 
   /**
-    State & Context
-   */
+  State & Context & Props
+  */
+
   const shopContext = useContext(ShopContext);
+  // const { match: {params: {type}}} = props;
+  const catalog = shopContext.publicmd.filter((item) => (item.category === MD_CATEGORY_INDEX_MODEL)) || [];
+  
+  console.log({thisStatus, catalog});
+
+
+  if (!thisStatus.isFetched || (catalog.length === 0)) {
+    shopContext.fetch('publicmd', {category: MD_CATEGORY_INDEX_MODEL});
+    thisStatus.isFetched = true;
+  }
 
   /**
-    Helper Functions
+    Helper functions
    */
- 
+
   /**
     Lifecycle
    */
 
   useEffect(() => {
-    console.log('Catalog::useEffect: ', shopContext);
+    console.log('CatalogPage::useEffect: ', {catalog});
   }, []);
 
   /**
-    Render
+    render
    */
 
   console.log('!!!catalog::render!!!');
