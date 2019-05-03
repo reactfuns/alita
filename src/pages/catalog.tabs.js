@@ -1,74 +1,92 @@
 import React, {Fragment, useRef, useState, useContext, useEffect} from 'react';
-import { Tabs } from 'antd-mobile';
+import { Tabs, Button } from 'antd-mobile';
+import { treeInitial } from 'allinlib';
 
 import SearchBar from '../components/SearchBar';
-
+// import List from '../components/List';
+import Grid from '../components/Grid';
 import ShopContext from '../context/shop';
 
-import List from '../components/List';
-
+const RENDER_CATALOG_NUMBER = 26;
 const MD_CATEGORY_INDEX_MODEL = 'MD_INDEX_MODEL';
+const INITIAL_VALUE = {
+  isFetched: false,
 
-const tabs = [
-  { title: '1', content: <div>hello world</div> },
-  { title: '2', content: <div>hello world</div> },
-  { title: '3', content: <div>hello world</div> },
-  { title: '4', content: <div>hello world</div> },
-  { title: '5', content: <div>hello world</div> },
-  { title: '6', content: <div>hello world</div> },
-  { title: '7', content: <div>hello world</div> },
-  { title: '8', content: <div>hello world</div> },
-  { title: '9', content: <div>hello world</div> },
-  { title: '10', content: <div>hello world</div> },
-  { title: '11', content: <div>hello world</div> },
-  { title: '12', content: <div>hello world</div> },
-  { title: '13', content: <div>hello world</div> },
-  { title: '14', content: <div>hello world</div> },
-  { title: '15', content: <div>hello world</div> },
-  { title: '16', content: <div>hello world</div> },
-  { title: '17', content: <div>hello world</div> },
-  { title: '18', content: <div>hello world</div> },
-];
-
-const thisStatus = {
-  isFetched: false
+  tree: {
+    root: {
+      __path: '车型索引',
+      __level: 1,
+      children: []
+    },
+    orphans: [],
+  },
 };
+const thisStatus = {};
+function resetComponent() {
+  thisStatus.isFetched = INITIAL_VALUE.isFetched;
+  thisStatus.tree = {
+    root: { ...INITIAL_VALUE.tree.root },
+    orphans: [],
+  };
+  thisStatus.tree.root.children = [];
+}
 
+resetComponent();
 export default (props) => {
 
   /**
-  State & Context & Props
-  */
+    Helper functions (Control)
+   */
 
-  const shopContext = useContext(ShopContext);
-  // const { match: {params: {type}}} = props;
-  const catalog = shopContext.publicmd.filter((item) => (item.category === MD_CATEGORY_INDEX_MODEL)) || [];
-  
-  console.log({thisStatus, catalog});
-
-
-  if (!thisStatus.isFetched || (catalog.length === 0)) {
+  const fetchData = () => {
     shopContext.fetch('publicmd', {category: MD_CATEGORY_INDEX_MODEL});
-    thisStatus.isFetched = true;
   }
 
   /**
-    Helper functions
-   */
+  State & Context & Props (Model)
+  */
 
+  const shopContext = useContext(ShopContext);
+  const catalog = shopContext.publicmd.filter((item) => (item.category === MD_CATEGORY_INDEX_MODEL)) || [];
+  treeInitial(catalog, 'tree_path', thisStatus.tree.root, thisStatus.tree.orphans);
+
+  const [choice, setChoice] = useState({ catalog: {} });
+  
   /**
-    Lifecycle
+    Lifecycle (Control)
    */
 
   useEffect(() => {
-    console.log('CatalogPage::useEffect: ', {catalog});
+    console.log('CatalogPage::useEffect: ', thisStatus);
+    if (!thisStatus.isFetched && (catalog.length === 0)) {
+      fetchData();
+      thisStatus.isFetched = true;
+    }
+
+    return ( () => {
+      console.log('CatalogPage::useEffect.unmounted!');
+      resetComponent();
+    });
   }, []);
 
   /**
-    render
+    render (View Model & View)
    */
 
-  console.log('!!!catalog::render!!!');
+  console.log('!!!catalog::render!!!', {thisStatus, catalog, choice});
+
+  const tabs = thisStatus.tree.root.children.map((tabItem) => ({
+    id: tabItem.id,
+    title: tabItem.__title, 
+    menus: tabItem.children.map((menuItem) => ({
+      tabId: tabItem.id,
+      title: menuItem.__title,
+      catalog: menuItem,
+    })),
+  }));
+  const grids = !choice.catalog.children ? [] : choice.catalog.children.map((item) => ({
+    text: item.__title,
+  }));
 
   const searchbar = useRef(null);
   return (
@@ -76,15 +94,19 @@ export default (props) => {
       <div>
         <SearchBar ref={searchbar} onSubmit={ () => {console.log('search: ', searchbar.current.state.value)} } />
       </div>
-      <Tabs tabs={tabs}
-        initalPage={1}
-        tabBarPosition="left"
-        tabDirection="vertical"
-        renderTabBar={props => <Tabs.DefaultTabBar {...props} page={10} />}
+      <Tabs tabBarPosition="left" tabDirection="vertical"
+        renderTabBar={props => <Tabs.DefaultTabBar {...props} page={RENDER_CATALOG_NUMBER} />}
+        tabs={tabs} initalPage={1}
       >
-        {tabs.map((tab, i) => (
-          <div style={{ width: "calc(100% - 100px)" }}>
-            {tab.content}
+        {tabs.map((tab) => (
+          <div key={tab.id} style={{ width: "calc(100% - 100px)" }}>
+            <div>
+              {tab.title}
+            </div>
+            <div>
+              {tab.menus.map(menuItem => <Button key={menuItem.title} inline size='small' onClick={() => setChoice(menuItem)} >{menuItem.title}</Button>)}
+              { (choice.tabId !== tab.id) ? null : <Grid data={grids} /> }
+            </div>
           </div>
         ))}
       </Tabs>

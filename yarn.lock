@@ -1133,6 +1133,12 @@ ajv@^6.1.0, ajv@^6.5.3, ajv@^6.5.5, ajv@^6.9.1:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+allinlib@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/allinlib/-/allinlib-0.0.2.tgz#062e54bdaa29022a952b1da22a7407e5696c6a68"
+  dependencies:
+    lodash "^4.17.11"
+
 alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"

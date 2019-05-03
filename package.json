@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "/app/weshop",
   "dependencies": {
+    "allinlib": "^0.0.2",
     "antd-mobile": "^2.2.9",
     "formik": "^1.5.1",
     "lodash": "^4.17.11",
