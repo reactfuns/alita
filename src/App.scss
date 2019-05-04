@@ -1,15 +1,17 @@
+@import './config/style.scss';
+
 .App {
   text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+  animation: App-logo-spin infinite linear $SPEED_SPIN;
   height: 40vmin;
   pointer-events: none;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: $COLOR_BACKGROUND;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,7 +22,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: $COLOR_LINK;
 }
 
 @keyframes App-logo-spin {

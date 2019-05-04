@@ -9,7 +9,7 @@ import ExceptionPage from './pages/exception';
 import config from './lib/config';
 
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 const App = () => (
   <div className="App">
