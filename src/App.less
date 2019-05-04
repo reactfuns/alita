@@ -1,17 +1,17 @@
-@import './config/style.scss';
+@import './config/style.less';
 
 .App {
   text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite linear $SPEED_SPIN;
+  animation: App-logo-spin infinite linear @SPEED_SPIN;
   height: 40vmin;
   pointer-events: none;
 }
 
 .App-header {
-  background-color: $COLOR_BACKGROUND;
+  background-color: @COLOR_BACKGROUND;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
 }
 
 .App-link {
-  color: $COLOR_LINK;
+  color: @COLOR_LINK;
 }
 
 @keyframes App-logo-spin {
