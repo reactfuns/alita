@@ -81,7 +81,10 @@ $item-height: 33vw;
                     padding: .4vw 1vw 0;
                     margin: .5vw .5vw .5vw 0;
                     box-sizing: border-box;
-                    @include display-flex()
+                    @include display-flex();
+                    @media screen and (max-width: 375px) {
+                        line-height: 1.1;
+                    }
                 }
             }
             .hdz-list-highlight {

@@ -105,7 +105,7 @@ export default (props) => {
               {tab.title}
             </div>
             <div>
-              <RollingTabs>
+              <RollingTabs onMoreClick={(e) => alert(e.target.textContent)}>
                 {tab.menus.map(menuItem => <Button key={menuItem.title} inline size='small' onClick={() => setChoice(menuItem)} >{menuItem.title}</Button>)}
               </RollingTabs>
               <div>
