@@ -5,6 +5,7 @@ import { treeInitial } from 'allinlib';
 import SearchBar from '../components/SearchBar';
 // import List from '../components/List';
 import Grid from '../components/Grid';
+import RollingTabs from '../components/RollingTabs';
 import ShopContext from '../context/shop';
 
 const RENDER_CATALOG_NUMBER = 26;
@@ -104,8 +105,12 @@ export default (props) => {
               {tab.title}
             </div>
             <div>
-              {tab.menus.map(menuItem => <Button key={menuItem.title} inline size='small' onClick={() => setChoice(menuItem)} >{menuItem.title}</Button>)}
-              { (choice.tabId !== tab.id) ? null : <Grid data={grids} /> }
+              <RollingTabs onMoreClick={(e) => alert(e.target.textContent)}>
+                {tab.menus.map(menuItem => <Button key={menuItem.title} inline size='small' onClick={() => setChoice(menuItem)} >{menuItem.title}</Button>)}
+              </RollingTabs>
+              <div>
+                { (choice.tabId !== tab.id) ? null : <Grid data={grids} /> }
+              </div>
             </div>
           </div>
         ))}
