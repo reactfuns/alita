@@ -44,7 +44,7 @@ export default (props) => {
     render
    */
 
-  const { sku } = shopContext;
+  const sku = shopContext.sku.records;
   // console.log({sku});
   return (
     <Fragment>

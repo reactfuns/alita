@@ -43,7 +43,7 @@ export default (props) => {
     Render
    */
 
-  const { publicmd } = shopContext;
+  const { publicmd } = shopContext.publicmd.records || [];
   return (
     <Fragment>
       <Button onClick={toTestUpdated}>update</Button>

@@ -23,7 +23,7 @@ export default (props) => {
     Render
    */
 
-  const { contents } = shopContext;
+  const contents = shopContext.contents.records;
   return (
     <div>
       { contents.map(ct => ( <p key={ct.id}>{ct.tree_path}</p> )) }

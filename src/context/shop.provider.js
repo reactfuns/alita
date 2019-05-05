@@ -29,30 +29,33 @@ const gTargetUrl = {
     orderbill: '/wepay/orderbill',
     consumecode: '/wechat/tmpscanurl',
 }
+
+const gStateZero = {
+    user: null,
+    
+    loading: {},
+    fetched: {},
+
+    criteria: {},
+
+    publicmd: { records: [] },
+
+    contents: { records: [] },
+    userinterface: { records: [] },
+
+    spu: { records: [], id: null },
+    sku: { records: [], id: null },
+    inventories: { records: [], id: null }, 
+    reservations: { records: [], id: null },
+
+    orders: { records: [], id: null },
+    orderTasks: { records: []  },
+    transactions: { records: [] }, 
+}
+
 export default function ShopProvider(props) {
 
-    const [shopState, dispatch] = useReducer(shopReducer, {
-        user: null,
-        
-        loading: {},
-
-        criteria: {},
-
-        publicmd: [],
-
-        contents: [],
-        userinterface: [],
-
-        spu: [], spuId: null,
-        sku: [], skuId: null,
-        inventories: [],
-        reservations: [],
-
-        orders: [], orderId: null,
-        orderTasks: [],
-        transactions: [], 
-
-    });
+    const [shopState, dispatch] = useReducer(shopReducer, gStateZero);
 
     useEffect(() => {
         const user = getKeyValue('current_user');
@@ -74,14 +77,13 @@ export default function ShopProvider(props) {
             if (!records || records instanceof Error) throw records;
 
             if (!!criteria) shopState.criteria[target] = criteria;
+            shopState.fetched[target] = true;
+            shopState[target].records = records;
+
             dispatch({
                 type: ACTION_SET,
-                payload: { 
-                    [target]: records,
-                    criteria: {...shopState.criteria}
-                }
+                payload: shopState
             });
-            
             return records;
 
         } catch (err) {

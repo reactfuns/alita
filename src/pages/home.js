@@ -36,7 +36,7 @@ export default (props) => {
 
   const shopContext = useContext(ShopContext);
   // const { match: {params: {type}}} = props;
-  const userinterface = shopContext.userinterface || [];
+  const userinterface = shopContext.userinterface.records || [];
 
   
   console.log({thisStatus, userinterface});

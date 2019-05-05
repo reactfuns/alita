@@ -48,7 +48,7 @@ export default (props) => {
   */
 
   const shopContext = useContext(ShopContext);
-  const catalog = shopContext.publicmd.filter((item) => (item.category === MD_CATEGORY_INDEX_MODEL)) || [];
+  const catalog = shopContext.publicmd.records.filter((item) => (item.category === MD_CATEGORY_INDEX_MODEL)) || [];
   treeInitial(catalog, 'tree_path', thisStatus.tree.root, thisStatus.tree.orphans);
 
   const [choice, setChoice] = useState({ catalog: {} });
@@ -98,6 +98,7 @@ export default (props) => {
       <Tabs tabBarPosition="left" tabDirection="vertical"
         renderTabBar={props => <Tabs.DefaultTabBar {...props} page={RENDER_CATALOG_NUMBER} />}
         tabs={tabs} initalPage={1}
+        style={{width: '100%'}}
       >
         {tabs.map((tab) => (
           <div key={tab.id} style={{ width: "calc(100% - 100px)" }}>

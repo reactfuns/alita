@@ -43,7 +43,7 @@ export default (props) => {
     render
    */
 
-  const { spu } = shopContext;
+  const spu = shopContext.spu.records;
   return (
     <Fragment>
       <List renderHeader={() => '产品列表'}>

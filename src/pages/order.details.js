@@ -41,7 +41,8 @@ export default (props) => {
   if (!theorder) { 
     return (<p>No order found!</p>);
   }
-  const { reservations, orderTasks } = shopContext;
+  const reservations = shopContext.reservations.records;
+  const orderTasks = shopContext.orderTasks.records;
 
   /**
     Helper functions

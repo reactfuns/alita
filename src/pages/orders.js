@@ -42,7 +42,7 @@ export default (props) => {
     render
    */
 
-  const { orders } = shopContext;
+  const orders = shopContext.orders.records;
   console.log({orders});
   return (
     <Fragment>
