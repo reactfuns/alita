@@ -1,45 +1,45 @@
-@full-width: 100%;
-@content-width: 60%;
-@extra-width: 15%;
-@item-height: 33vw;
+$full-width: 100%;
+$content-width: 60%;
+$extra-width: 15%;
+$item-height: 33vw;
 
-.display-flex(@jc: center, @ai: center, @fd: row) {
+@mixin display-flex($jc: center, $ai: center, $fd: row) {
     display: flex;
-    justify-content: @jc;
-    align-items: @ai;
-    flex-direction: @fd;
+    justify-content: $jc;
+    align-items: $ai;
+    flex-direction: $fd;
 }
-.text-hide-simple() {
+@mixin text-hide-simple() {
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap
 }
-.text-hide(@line) {
+@mixin text-hide($line) {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: @line;
+    -webkit-line-clamp: $line;
     -webkit-box-orient: vertical;
 }
 
 #hdz-list-view {
-    width: @full-width;
+    width: $full-width;
     height: auto;
     .hdz-list-item {
-        width: @full-width;
-        height: @item-height;
+        width: $full-width;
+        height: $item-height;
         padding: 2vw;
         box-sizing: border-box;
         overflow: hidden;
         border-bottom: 1px solid #E1E1E1;
         background: #FFF;
-        .display-flex(flex-start);
+        @include display-flex(flex-start);
         &:last-child {
             border-bottom: none;
         }
         .hdz-list-image {
-            width: (@item-height - 4vw)/3*4;
-            height: @item-height - 4vw;
+            width: ($item-height - 4vw)/3*4;
+            height: $item-height - 4vw;
             overflow: hidden;
             &.hdz-list-image-raidus {
                 border-radius: 6px;
@@ -51,27 +51,27 @@
         }
 
         .hdz-list-content {
-            width: @content-width;
+            width: $content-width;
             height: 100%;
             margin: 0 2vw;
             overflow: hidden;
             font-size: 3vw;
             line-height: 1.5;
-            // .display-flex(space-between, flex-start, column);
+            // @include display-flex(space-between, flex-start, column);
             .hdz-list-title {
                 width: 100%;
                 height: 40%;
                 font-size: 3.5vw;
                 font-weight: bold;
                 line-height: 1.6;
-                .text-hide(2);
+                @include text-hide(2);
             }
             .hdz-list-tags {
                 width: 100%;
                 height: 20%;
                 overflow: hidden;
                 flex-wrap: wrap;
-                .display-flex(flex-start);
+                @include display-flex(flex-start);
                 span {
                     border: 1px solid #FF5E24;
                     color: #FF5E24;
@@ -81,7 +81,7 @@
                     padding: .4vw 1vw 0;
                     margin: .5vw .5vw .5vw 0;
                     box-sizing: border-box;
-                    .display-flex()
+                    @include display-flex()
                 }
             }
             .hdz-list-highlight {
@@ -106,17 +106,17 @@
                 width: 100%;
                 height: 20%;
                 overflow: hidden;
-                .display-flex(flex-end);
+                @include display-flex(flex-end);
                 .hdz-counter {
                     width: 20vw;
                     height: 100%;
-                    .display-flex(space-between);
+                    @include display-flex(space-between);
                     >div {
                         width: 5.5vw;
                         height: 5.5vw;
                         text-align: center;
                         border-radius: 50%;
-                        .display-flex();
+                        @include display-flex();
                     }
                     .hdz-counter-sub {
                         font-size: 5vw;
@@ -144,21 +144,21 @@
                 height: 20%;
                 color: #666;
                 line-height: 2;
-                .text-hide-simple();
+                @include text-hide-simple();
             }
         }
 
         .hdz-list-action {
-            width: @extra-width;
+            width: $extra-width;
             height: 100%;
             transition: all .35s ease-in-out;
-            .display-flex(space-between, center, column);
+            @include display-flex(space-between, center, column);
             .hdz-list-extra-block {
                 width: 100%;
                 height: 100%;
                 color: #FFF;
                 background: #FDA400;
-                .display-flex();
+                @include display-flex();
             }
         }
     }

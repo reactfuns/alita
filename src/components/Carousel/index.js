@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'antd-mobile';
-import './index.css';
+import './index.scss';
 
 export default (props) => {
 

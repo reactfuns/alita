@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import './index.css';
+import './index.scss';
 
 const IMAGE_TYPE_CLASS = {
     radius: 'hdz-list-image-raidus',
