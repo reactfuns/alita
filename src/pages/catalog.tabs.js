@@ -10,73 +10,76 @@ import ShopContext from '../context/shop';
 
 const RENDER_CATALOG_NUMBER = 26;
 const MD_CATEGORY_INDEX_MODEL = 'MD_INDEX_MODEL';
-const INITIAL_VALUE = {
-  isFetched: false,
-
-  tree: {
-    root: {
-      __path: '车型索引',
-      __level: 1,
-      children: []
-    },
-    orphans: [],
+const INITIAL_TREE_VALUE = {
+  root: {
+    __path: '车型索引',
+    __level: 1,
+    children: []
   },
+  orphans: [],
 };
-const thisStatus = {};
-function resetComponent() {
-  thisStatus.isFetched = INITIAL_VALUE.isFetched;
-  thisStatus.tree = {
-    root: { ...INITIAL_VALUE.tree.root },
-    orphans: [],
-  };
-  thisStatus.tree.root.children = [];
+
+function resetTree(tree) {
+  tree.root = INITIAL_TREE_VALUE.root;
+  tree.root.children = [];
+  tree.orphans = [];
 }
 
-resetComponent();
 export default (props) => {
 
-  /**
-    Helper functions (Control)
-   */
-
-  const fetchData = () => {
-    shopContext.fetch('publicmd', {category: MD_CATEGORY_INDEX_MODEL});
-  }
+  console.log('++++++++++ catalog.tabs start +++++++++++++');
 
   /**
   State & Context & Props (Model)
   */
 
   const shopContext = useContext(ShopContext);
-  const catalog = shopContext.publicmd.records.filter((item) => (item.category === MD_CATEGORY_INDEX_MODEL)) || [];
-  treeInitial(catalog, 'tree_path', thisStatus.tree.root, thisStatus.tree.orphans);
+  const mdcatalogs = shopContext.publicmd.records.filter((item) => (item.category === MD_CATEGORY_INDEX_MODEL)) || [];
 
+  const [tree, setTree] = useState(() => {
+    console.log('++++++++++ catalog.tabs state.tree initial +++++++++++++');
+    const tree = {};
+    resetTree(tree);
+    treeInitial(mdcatalogs, 'tree_path', tree.root, tree.orphans);
+    return tree;
+  });
   const [choice, setChoice] = useState({ catalog: {} });
   
+  /**
+    Helper functions (Control)
+   */
+
+  const fetchData = async () => {
+    console.log('catalog::fetchData');
+    try {
+      const rows = await shopContext.fetch('publicmd', {category: MD_CATEGORY_INDEX_MODEL});
+      const tree = {};
+      resetTree(tree);
+      treeInitial(rows, 'tree_path', tree.root, tree.orphans);
+      setTree(tree);
+    } catch (err) {
+      console.error('fetchData Error: ', err);
+    }
+  }
+
   /**
     Lifecycle (Control)
    */
 
   useEffect(() => {
-    console.log('CatalogPage::useEffect: ', thisStatus);
-    if (!thisStatus.isFetched && (catalog.length === 0)) {
+    console.log('CatalogPage::useEffect ');
+    if (!shopContext.fetched['publicmd']) {
       fetchData();
-      thisStatus.isFetched = true;
     }
-
-    return ( () => {
-      console.log('CatalogPage::useEffect.unmounted!');
-      resetComponent();
-    });
   }, []);
 
   /**
     render (View Model & View)
    */
 
-  console.log('!!!catalog::render!!!', {thisStatus, catalog, choice});
+  console.log('!!!catalog::render!!!', {choice});
 
-  const tabs = thisStatus.tree.root.children.map((tabItem) => ({
+  const tabs = tree.root.children.map((tabItem) => ({
     id: tabItem.id,
     title: tabItem.__title, 
     menus: tabItem.children.map((menuItem) => ({
