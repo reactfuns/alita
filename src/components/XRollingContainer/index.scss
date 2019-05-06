@@ -1,4 +1,4 @@
-.subclass-tabs-container {
+.x-rolling-container {
     position: relative;
     width: 100%;
     height: 30px;
@@ -8,7 +8,7 @@
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
 
-    .subclass-tabs-body {
+    .x-rolling-body {
         width: 100%;
         height: 40px;
         padding-bottom: 10px;
@@ -24,15 +24,4 @@
         }
     }
 
-    .subclass-tabs-more {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 20px;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: -1px -1px 5px #CCC;
-    }
 }

@@ -5,7 +5,8 @@ import { treeInitial } from 'allinlib';
 import SearchBar from '../components/SearchBar';
 // import List from '../components/List';
 import Grid from '../components/Grid';
-import RollingTabs from '../components/RollingTabs';
+import XRollingContainer from '../components/XRollingContainer';
+
 import ShopContext from '../context/shop';
 
 const RENDER_CATALOG_NUMBER = 26;
@@ -101,17 +102,16 @@ export default (props) => {
       <Tabs tabBarPosition="left" tabDirection="vertical"
         renderTabBar={props => <Tabs.DefaultTabBar {...props} page={RENDER_CATALOG_NUMBER} />}
         tabs={tabs} initalPage={1}
-        style={{width: '100%'}}
       >
         {tabs.map((tab) => (
-          <div key={tab.id} style={{ width: "calc(100% - 100px)" }}>
+          <div key={tab.id} >
             <div>
               {tab.title}
             </div>
             <div>
-              <RollingTabs onMoreClick={(e) => alert(e.target.textContent)}>
+              <XRollingContainer onMoreClick={(e) => alert(e.target.textContent)}>
                 {tab.menus.map(menuItem => <Button key={menuItem.title} inline size='small' onClick={() => setChoice(menuItem)} >{menuItem.title}</Button>)}
-              </RollingTabs>
+              </XRollingContainer>
               <div>
                 { (choice.tabId !== tab.id) ? null : <Grid data={grids} /> }
               </div>
