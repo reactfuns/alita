@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { Button } from 'antd-mobile';
 
 import ShopContext from '../context/shop';
-import { ACTION_SET } from '../context/shop.reducer';
+import { ACTION } from '../context/shop.reducer';
 
 import { removeKey } from '../lib/persistance';
 
@@ -12,7 +12,7 @@ export default (props) => {
   return (
     <Button {...props} onClick={() => {
       shopContext.dispatch({
-        type: ACTION_SET,
+        type: ACTION.COMBINE,
         payload: { user: null }
       });
       removeKey('current_user');

@@ -1,11 +1,13 @@
 
-const setContext = (state, payload) => {
-    return ({ ...state, ...payload });
+export const ACTION = {
+    REPLACE: 'ACTION_REPLACE',
+    COMBINE: 'ACTION_COMBINE',
+    MERGE: 'ACTION_MERGE',
 }
 
-export const ACTION_SET = 'ACTION_SET';
-
 export const shopReducer = (state, action) => { switch (action.type) {
-    case ACTION_SET: return setContext(state, action.payload);
+    case ACTION.REPLACE: return ({ ...action.payload });
+    case ACTION.COMBINE: return ({ ...state, ...action.payload });
+    case ACTION.MERGE: return Object.assign(state, action.payload);
     default: return state;
 }};

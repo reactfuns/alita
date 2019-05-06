@@ -10,7 +10,7 @@ import InputField from '../components/InputField';
 import LogoutButton from '../components/LogoutButton';
 
 import ShopContext from '../context/shop';
-// import { shopReducer, ACTION_SET } from '../context/shop.reducer';
+// import { shopReducer, ACTION } from '../context/shop.reducer';
 
 import config from '../lib/config';
 

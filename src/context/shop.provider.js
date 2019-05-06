@@ -5,7 +5,7 @@ import { setKeyValue, getKeyValue } from '../lib/persistance';
 // import config from '../config';
 
 import ShopContext from './shop';
-import { shopReducer, ACTION_SET } from './shop.reducer';
+import { shopReducer, ACTION } from './shop.reducer';
 
 const gTargetUrl = {
 
@@ -62,7 +62,7 @@ export default function ShopProvider(props) {
         console.log('ShopProvider::useEffect: ', {shopState, user});
         if (!!user) {
             dispatch({
-                type: ACTION_SET,
+                type: ACTION.COMBINE,
                 payload: { user: JSON.parse(user) }
             });
         }
@@ -81,7 +81,7 @@ export default function ShopProvider(props) {
             shopState[target].records = records;
 
             dispatch({
-                type: ACTION_SET,
+                type: ACTION.COMBINE,
                 payload: shopState
             });
             return records;
@@ -148,7 +148,7 @@ export default function ShopProvider(props) {
             if (!result) throw new Error('登陆失败！')
 
             dispatch({
-                type: ACTION_SET,
+                type: ACTION.COMBINE,
                 payload: { user: result }
             });
             setKeyValue('current_user', JSON.stringify(result));
@@ -175,7 +175,7 @@ export default function ShopProvider(props) {
 
             shopState.user.credential = credential;
             dispatch({
-                type: ACTION_SET,
+                type: ACTION.COMBINE,
                 payload: shopState
             });
             setKeyValue('current_user', JSON.stringify(shopState.user));

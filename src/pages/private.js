@@ -6,7 +6,7 @@ import superFetch from '../lib/api';
 import { flushAll } from '../lib/persistance';
 
 import ShopContext from '../context/shop';
-import { ACTION_SET } from '../context/shop.reducer';
+import { ACTION } from '../context/shop.reducer';
 
 import MaindataPage from './maindata';
 import ContentsPage from './contents';
@@ -52,7 +52,7 @@ export default (props) => {
     console.log({result});
 
     shopContext.dispatch({
-      type: ACTION_SET,
+      type: ACTION.COMBINE,
       payload: { user: null }
     });
     flushAll();
