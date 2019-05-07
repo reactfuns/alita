@@ -37,7 +37,7 @@ export default (props) => {
     isPaying: false,
     payer: null,
   });
-  const theorder = _.find(shopContext.orders, {id: order.id}) || order;
+  const theorder = _.find(shopContext.orders.records, {id: order.id}) || order;
   if (!theorder) { 
     return (<p>No order found!</p>);
   }
