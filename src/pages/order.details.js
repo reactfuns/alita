@@ -142,7 +142,7 @@ export default (props) => {
    */
 
   //else 
-  const thestatus = theorder.current_wf_status || '';
+  const thestatus = `${theorder.status}: ${theorder.current_wf_status || ''}`;
   const theresult = theorder.current_wf_result || '';
   const thestep   = (!theorder.current_wf_steps || !theorder.current_wf_step) ? {name: '', tasks: [] } : theorder.current_wf_steps[theorder.current_wf_step];
   const theworkfl = theorder.latest_wf_label || '';
