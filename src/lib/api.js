@@ -113,9 +113,14 @@ const basicFetch = async (method, url, payload = null, extra = null) => {
 
 			return response.json();
 		})
-		.catch((e) => {
+		.catch(async (e) => {
+			console.error(
+				'fetch error: ',
+				e,
+				await e.response.json()
+			);
+
 			const status = e.name;
-			console.error('fetch error: ', e);
 			if (status === 401) {
 				flushAll();
 				// window.location.href = config.LOCAL_URL.ROOT;
